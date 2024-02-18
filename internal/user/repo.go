@@ -2,8 +2,6 @@ package user
 
 import (
 	"database/sql"
-
-	"github.com/google/uuid"
 )
 
 type UserRepository struct {
@@ -42,7 +40,7 @@ func (ur *UserRepository) FindByEmailWithPassword(email string) (*User, error) {
 		JOIN (
 			SELECT DISTINCT ON ("user_id") "user_id", password
 			FROM "passwords"
-		    ORDER BY "user_id", "created_at" DESC		) p ON u.id = p.user_id
+		    ORDER BY "user_id", "created_at" DESC) p ON u.id = p.user_id
 		WHERE u.email = $1`,
 		email).
 		Scan(&user.ID, &user.Name, &user.Email, &user.Phone, &user.CreatedAt, &user.Password)
@@ -50,7 +48,7 @@ func (ur *UserRepository) FindByEmailWithPassword(email string) (*User, error) {
 	return &user, err
 }
 
-func (ur *UserRepository) FindById(id uuid.UUID) (*User, error) {
+func (ur *UserRepository) FindById(id string) (*User, error) {
 	var user User
 	err := ur.db.QueryRow("SELECT id, name, email, phone, created_at FROM users WHERE id = $1", id).
 		Scan(&user.ID, &user.Name, &user.Email, &user.Phone, &user.CreatedAt, &user.Password)

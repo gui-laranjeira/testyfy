@@ -22,7 +22,7 @@ type IUserRepository interface {
 	CreateUser(user *User) (insertedID string, err error)
 	FindByEmail(email string) (*User, error)
 	FindByEmailWithPassword(email string) (*User, error)
-	FindById(id uuid.UUID) (*User, error)
+	FindById(id string) (*User, error)
 }
 
 type IUserUseCase interface {

@@ -27,6 +27,26 @@ func (r *GuestRepository) FindGuestById(id string) (*Guest, error) {
 	return &guest, err
 }
 
+func (r *GuestRepository) FindGuestByUserId(id string) ([]*Guest, error) {
+	var guests []*Guest
+	rows, err := r.db.Query("SELECT id, user_id, name, email, created_at FROM guests WHERE user_id = $1", id)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var guest Guest
+		err := rows.Scan(&guest.ID, &guest.UserId, &guest.Name, &guest.Email, &guest.CreatedAt)
+		if err != nil {
+			return nil, err
+		}
+		guests = append(guests, &guest)
+	}
+
+	return guests, nil
+}
+
 func (r *GuestRepository) FindGuestByEmail(email string) (*Guest, error) {
 	var guest Guest
 	err := r.db.QueryRow("SELECT id, user_id, name, email, created_at FROM guests WHERE email = $1", email).

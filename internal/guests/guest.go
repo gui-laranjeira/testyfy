@@ -19,6 +19,7 @@ type Guest struct {
 type IGuestRepository interface {
 	CreateGuest(guest *Guest) (insertedID string, err error)
 	FindGuestById(id string) (*Guest, error)
+	FindGuestByUserId(userId string) ([]*Guest, error)
 	FindGuestByEmail(email string) (*Guest, error)
 	UpdateGuest(guest *Guest) (rowsAffected int, err error)
 	DeleteGuest(id string) (rowsAffected int, err error)
@@ -27,9 +28,10 @@ type IGuestRepository interface {
 type IGuestUseCase interface {
 	CreateGuest(CreateGuestInput) (*Guest, error)
 	FindGuestById(id string) (*Guest, error)
+	FindGuestByUserId(userId string) ([]*Guest, error)
 	FindGuestByEmail(email string) (*Guest, error)
 	UpdateGuest(UpdateGuestInput) (*Guest, error)
-	DeleteGuest(id string) error
+	DeleteGuest(id string) (int, error)
 }
 
 type CreateGuestInput struct {
