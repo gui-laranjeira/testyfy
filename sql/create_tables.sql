@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS "users" (
-  "id" bigserial PRIMARY KEY,
+  "id" varchar PRIMARY KEY,
   "name" varchar NOT NULL,
   "email" varchar NOT NULL,
   "phone" varchar NOT NULL,
@@ -7,44 +7,44 @@ CREATE TABLE IF NOT EXISTS "users" (
 );
 
 CREATE TABLE IF NOT EXISTS "passwords" (
-  "user_id" bigserial NOT NULL,
+  "user_id" varchar NOT NULL,
   "password" varchar NOT NULL,
   "code" SERIAL NOT NULL,
   "created_at" timestamp NOT NULL DEFAULT (now())
 );
 
 CREATE TABLE IF NOT EXISTS "groups" (
-  "id" bigserial PRIMARY KEY,
-  "user_id" bigserial NOT NULL,
+  "id" varchar PRIMARY KEY,
+  "user_id" varchar NOT NULL,
   "name" varchar NOT NULL,
   "description" varchar NOT NULL,
   "created_at" timestamp NOT NULL DEFAULT (now())
 );
 
 CREATE TABLE IF NOT EXISTS "guests" (
-  "id" bigserial PRIMARY KEY,
-  "user_id" bigserial NOT NULL,
+  "id" varchar PRIMARY KEY,
+  "user_id" varchar NOT NULL,
   "name" varchar NOT NULL,
   "email" varchar,
   "created_at" timestamp NOT NULL DEFAULT (now())
 );
 
 CREATE TABLE IF NOT EXISTS "guest_on_group" (
-  "guest_id" bigserial NOT NULL,
-  "group_id" bigserial NOT NULL
+  "guest_id" varchar NOT NULL,
+  "group_id" varchar NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS "tests" (
-  "id" bigserial PRIMARY KEY,
-  "group_id" bigserial NOT NULL,
+  "id" varchar PRIMARY KEY,
+  "group_id" varchar NOT NULL,
   "name" varchar NOT NULL,
   "description" varchar,
   "created_at" timestamp NOT NULL DEFAULT (now())
 );
 
 CREATE TABLE IF NOT EXISTS "questions" (
-  "id" bigserial PRIMARY KEY,
-  "test_id" bigserial NOT NULL,
+  "id" varchar PRIMARY KEY,
+  "test_id" varchar NOT NULL,
   "question" varchar NOT NULL,
   "answer_type_code" smallint NOT NULL,
   "first_option" varchar,
@@ -62,17 +62,17 @@ CREATE TABLE IF NOT EXISTS "answers_type" (
 );
 
 CREATE TABLE IF NOT EXISTS "guest_on_test" (
-  "id" bigserial PRIMARY KEY,
-  "guest_id" bigserial NOT NULL,
-  "test_id" bigserial NOT NULL,
+  "id" varchar PRIMARY KEY,
+  "guest_id" varchar NOT NULL,
+  "test_id" varchar NOT NULL,
   "test_url" varchar NOT NULL,
   "total_score" real,
   "created_at" timestamp NOT NULL DEFAULT (now())
 );
 
 CREATE TABLE IF NOT EXISTS "guest_on_question" (
-  "guest_id" bigserial NOT NULL,
-  "question_id" bigserial NOT NULL,
+  "guest_id" varchar NOT NULL,
+  "question_id" varchar NOT NULL,
   "answer" varchar NOT NULL,
   "score" real,
   "created_at" timestamp NOT NULL DEFAULT (now())
