@@ -31,11 +31,11 @@ func (uh *UserHandler) Authenticate(c *fiber.Ctx) error {
 
 	var input AuthenticateInput
 	if err := c.BodyParser(&input); err != nil {
-		return err
+		return c.Status(fiber.StatusBadRequest).JSON(err.Error())
 	}
 	user, err := uh.useCase.Authenticate(input)
 	if err != nil {
-		return err
+		return c.Status(fiber.StatusBadRequest).JSON(err.Error())
 	}
 
 	c.Set("Content-Type", "application/json")

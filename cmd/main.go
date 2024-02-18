@@ -25,9 +25,10 @@ func main() {
 	userHandler := user.UserFactory(db)
 
 	app := fiber.New()
-	app.Get("/ping", func(c *fiber.Ctx) error { return c.SendString("pong") })
-	app.Post("/users/register", userHandler.CreateUser)
-	app.Post("/users/authenticate", userHandler.Authenticate)
+
+	app.Get("/api/v1/ping", func(c *fiber.Ctx) error { return c.SendString("pong") })
+	app.Post("/api/v1/users/register", userHandler.CreateUser)
+	app.Post("/api/v1/auth/login", userHandler.Authenticate)
 
 	app.Listen(":" + cfg.Server.Port)
 }
